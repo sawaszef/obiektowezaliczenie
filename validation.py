@@ -4,7 +4,7 @@ import game_module as gm
 
 class Validator:
     def __init__(self):
-        self.solution = "rifle"
+        self.solution = self.pick_solution()
         self.guesses = 0
 
     @staticmethod
