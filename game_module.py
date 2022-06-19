@@ -1,26 +1,25 @@
 # okno główne
-import pygame, os
-SIZESCREEN = WIDTH, HEIGHT = 1280, 720
+import pygame
+import random
 
 
-# kolory
-DARKGREEN = pygame.color.THECOLORS['darkgreen']
-LIGHTBLUE = pygame.color.THECOLORS['lightblue']
-
-
+SIZESCREEN = WIDTH, HEIGHT = 800, 750
 screen = pygame.display.set_mode(SIZESCREEN)
+pygame.font.init()
+
+# font
+LETTERBOX_FONT = pygame.font.Font("FreeSansBold.otf", 50)
+KEYBOARD_FONT = pygame.font.Font("FreeSansBold.otf", 25)
+KEYBOARD_LAYOUT = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"]
+ALPHABET = "QWERTYUIOPASDFGHJKLZXCVBNM"
 
 # # grafika  - wczytywanie grafik
-# path = os.path.join(os.pardir, 'images')
-# file_names = sorted(os.listdir(path))
-#
-# file_names.remove('background.png')
-# BACKGROUND = pygame.image.load(os.path.join(path, 'background.png')).convert()
-# for file_name in file_names:
-#     image_name = file_name[:-4].upper()
-#     globals()[image_name] = pygame.image.load(os.path.join(path, file_name)).convert_alpha(BACKGROUND)
-#
-# # grafika gracza
-# PLAYER_WALK_LIST_R = [PLAYER_WALK1_R, PLAYER_WALK2_R, PLAYER_WALK3_R,
-#                       PLAYER_WALK4_R, PLAYER_WALK5_R, PLAYER_WALK6_R, PLAYER_WALK7_R]
-#
+GAME_BACKGROUND = pygame.image.load("./images/Starting Tiles.png")
+BG_COLOR = (18, 18, 19)
+BG_YELLOW = (181, 159, 59)
+BG_GREEN = (83, 141, 78)
+BG_GRAY = (58, 58, 60)
+
+LETTER_SIZE = 77
+
+guesses = 0
