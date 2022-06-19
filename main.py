@@ -3,6 +3,7 @@ import os
 import game_module as gm
 import letterbox as l
 import word as w
+import validation as valid
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
@@ -15,15 +16,20 @@ clock = pygame.time.Clock()
 screen.fill(gm.BG_COLOR)
 pygame.display.set_caption("ŁORDL")
 
-# Stworzenie słowa odgadywanego
+# Stworzenie słowa odgadywanego i walidatora odpowiedzi
 current_guess = w.Word()
+validator = valid.Validator()
 
 # wgranie tła
 screen.blit(gm.GAME_BACKGROUND, (188.5, 20))
 
+
 # pętla główna gry
 window_open = True
 while window_open:
+
+    if validator.guesses == 6:
+        break
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -33,8 +39,10 @@ while window_open:
                 window_open = False
             elif event.key == pygame.K_RETURN:
                 if len(current_guess.letters) == 5:
-                    # Check if its correct, if yes end, if not create a new guess
-                    current_guess = w.Word()
+                    has_won = validator.check_guess(current_guess, screen)
+                    if has_won:
+                        window_open = False
+                    current_guess.clear()
             elif event.key == pygame.K_BACKSPACE:
                 if len(current_guess.letters) > 0:
                     current_guess.delete_letter(screen)
@@ -50,5 +58,10 @@ while window_open:
 
     pygame.display.flip()
     clock.tick(30)
+
+if has_won:
+    print("Wygrales!")
+else:
+    print(f"Przegrales, poprawne slowo to {validator.solution}")
 
 pygame.quit()

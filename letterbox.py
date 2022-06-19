@@ -1,10 +1,11 @@
 import pygame
 import game_module as gm
 
+
 class Letter:
 
     LETTER_X_SPACING = 85
-    LETTER_Y_SPACING = 12
+    LETTER_Y_SPACING = 100
     current_letter_pos = [190, 20]
 
     def __init__(self, text):
@@ -31,6 +32,3 @@ class Letter:
         pygame.draw.rect(surface, gm.BG_GRAY, self.bg_rect, 3)
         pygame.display.update()
         Letter.current_letter_pos[0] -= Letter.LETTER_X_SPACING
-
-
-

@@ -1,10 +1,7 @@
-import pygame
 import letterbox as l
 
 
 class Word:
-
-    guesses = 0
 
     def __init__(self):
         self.letters = []
@@ -16,3 +13,7 @@ class Word:
         self.letters[-1].delete(surface)
         self.letters.pop()
 
+    def clear(self):
+        self.letters.clear()
+        l.Letter.current_letter_pos[1] += l.Letter.LETTER_Y_SPACING
+        l.Letter.current_letter_pos[0] = 190
