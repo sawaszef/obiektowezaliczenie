@@ -1,9 +1,10 @@
 import pygame
 import os
 import game_module as gm
-import letterbox as l
+import letter as l
 import word as w
 import validation as valid
+import keyboard as k
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
@@ -19,13 +20,20 @@ pygame.display.set_caption("ŁORDL")
 # Stworzenie słowa odgadywanego i walidatora odpowiedzi
 current_guess = w.Word()
 validator = valid.Validator()
+# print(validator.solution)
 
-# wgranie tła
+# wgranie tła i klawiatury
 screen.blit(gm.GAME_BACKGROUND, (188.5, 20))
-
+for index, row in enumerate(gm.KEYBOARD_LAYOUT):
+    for letter in row:
+        key = k.Key(letter)
+        key.draw(screen)
+    k.Key.current_letter_pos[0] = 190 + index * k.Key.LETTER_X_SPACING
+    k.Key.current_letter_pos[1] += k.Key.LETTER_Y_SPACING
 
 # pętla główna gry
 window_open = True
+has_won = False
 while window_open:
 
     if validator.guesses == 6:
@@ -39,14 +47,15 @@ while window_open:
                 window_open = False
             elif event.key == pygame.K_RETURN:
                 if len(current_guess.letters) == 5:
-                    has_won = validator.check_guess(current_guess, screen)
-                    if has_won:
-                        window_open = False
-                    current_guess.clear()
+                    has_won, is_in_wordlist = validator.check_guess(current_guess, screen)
+                    if is_in_wordlist:
+                        current_guess.clear()
+                        if has_won:
+                            window_open = False
+
             elif event.key == pygame.K_BACKSPACE:
                 if len(current_guess.letters) > 0:
                     current_guess.delete_letter(screen)
-                    print(current_guess.letters)
             else:
                 key_pressed = event.unicode.upper()
                 if key_pressed in gm.ALPHABET and key_pressed != "":
@@ -54,7 +63,6 @@ while window_open:
                         new_letter = l.Letter(key_pressed)
                         new_letter.draw(screen)
                         current_guess.add_letter(new_letter)
-                        print(current_guess.letters)
 
     pygame.display.flip()
     clock.tick(30)

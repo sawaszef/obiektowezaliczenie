@@ -1,6 +1,5 @@
 # okno główne
 import pygame
-import random
 
 
 SIZESCREEN = WIDTH, HEIGHT = 800, 750
@@ -9,7 +8,7 @@ pygame.font.init()
 
 # font
 LETTERBOX_FONT = pygame.font.Font("FreeSansBold.otf", 50)
-KEYBOARD_FONT = pygame.font.Font("FreeSansBold.otf", 25)
+KEYBOARD_FONT = pygame.font.Font("FreeSansBold.otf", 30)
 KEYBOARD_LAYOUT = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"]
 ALPHABET = "QWERTYUIOPASDFGHJKLZXCVBNM"
 
@@ -21,5 +20,6 @@ BG_GREEN = (83, 141, 78)
 BG_GRAY = (58, 58, 60)
 
 LETTER_SIZE = 77
+KEYBOARD_LETTER_SIZE = 30
 
 guesses = 0
