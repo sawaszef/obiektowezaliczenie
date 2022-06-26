@@ -5,7 +5,7 @@ import game_module as gm
 
 class Key(lb.Letterbox):
 
-    ALL_KEYS = []
+    ALL_KEYS = {}
     LETTER_X_SPACING = 40
     LETTER_Y_SPACING = 35
     current_letter_pos = [190, 600]
@@ -15,7 +15,8 @@ class Key(lb.Letterbox):
         self.bg_rect = (self.x, self.y, gm.KEYBOARD_LETTER_SIZE, gm.KEYBOARD_LETTER_SIZE)
         self.text_surface = gm.KEYBOARD_FONT.render(self.text, True, self.text_color)
         self.text_rect = self.text_surface.get_rect(center=self.text_position)
-        Key.ALL_KEYS.append(self)
+        self.fill = False
+        Key.ALL_KEYS[self.text] = self
 
     def draw(self, surface):
         pygame.draw.rect(surface, self.bg_color, self.bg_rect)
@@ -25,4 +26,11 @@ class Key(lb.Letterbox):
         surface.blit(self.text_surface, self.text_rect)
         Key.current_letter_pos[0] += Key.LETTER_X_SPACING
 
-
+    @staticmethod
+    def create_keyboard(surface):
+        for index, row in enumerate(gm.KEYBOARD_LAYOUT):
+            for letter in row:
+                key = Key(letter)
+                key.draw(surface)
+            Key.current_letter_pos[0] = 190 + index * Key.LETTER_X_SPACING
+            Key.current_letter_pos[1] += Key.LETTER_Y_SPACING

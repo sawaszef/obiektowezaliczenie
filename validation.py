@@ -1,6 +1,6 @@
-import random
 import game_module as gm
 import keyboard as k
+import pygame
 
 
 class Validator:
@@ -14,7 +14,7 @@ class Validator:
     def pick_solution(self):
         with open("wordlist.txt", 'r') as file:
             self.words = [word.rstrip("\n") for word in file.readlines()]
-        self.solution = random.choice(self.words)
+        self.solution = "brown"
         self.solution_dict = {letter: self.solution.count(letter) for letter in self.solution}
 
     def check_guess(self, guess, surface):
@@ -26,21 +26,21 @@ class Validator:
                 if letter.text.lower() in self.solution_dict.keys() and self.solution_dict[letter.text.lower()] > 0:
                     if self.solution[index] == letter.text.lower():
                         letter.bg_color = gm.BG_GREEN
-                        for key in k.Key.ALL_KEYS:
-                            key.bg_color = gm.BG_GREEN if key.text == letter.text else key.bg_color
+                        k.Key.ALL_KEYS[letter.text].bg_color = gm.BG_GREEN
+                        k.Key.ALL_KEYS[letter.text].fill = True
+                        self.solution_dict[letter.text.lower()] -= 1
                     else:
                         letter.bg_color = gm.BG_YELLOW
-                        for key in k.Key.ALL_KEYS:
-                            key.bg_color = gm.BG_YELLOW if key.text == letter.text and key.bg_color != gm.BG_GREEN else key.bg_color
-                    self.solution_dict[letter.text.lower()] -= 1
+                        if not k.Key.ALL_KEYS[letter.text].fill:
+                            k.Key.ALL_KEYS[letter.text].bg_color = gm.BG_YELLOW
+                            k.Key.ALL_KEYS[letter.text].fill = True
+                        self.solution_dict[letter.text.lower()] -= 1
                 else:
+                    if not k.Key.ALL_KEYS[letter.text].fill:
+                        k.Key.ALL_KEYS[letter.text].bg_color = gm.BG_GRAY
                     letter.bg_color = gm.BG_GRAY
-                    for key in k.Key.ALL_KEYS:
-                        key.bg_color = gm.BG_GRAY if key.text == letter.text else key.bg_color
-
                 letter.draw(surface)
-                for key in k.Key.ALL_KEYS:
-                    key.draw(surface)
+                k.Key.ALL_KEYS[letter.text].draw(surface)
 
             self.guesses += 1
             if guess_str == self.solution:
@@ -53,5 +53,3 @@ class Validator:
             has_won = False
         self.solution_dict = {letter: self.solution.count(letter) for letter in self.solution}
         return has_won, in_wordlist
-
-

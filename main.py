@@ -20,16 +20,11 @@ pygame.display.set_caption("ŁORDL")
 # Stworzenie słowa odgadywanego i walidatora odpowiedzi
 current_guess = w.Word()
 validator = valid.Validator()
-# print(validator.solution)
+print(validator.solution)
 
 # wgranie tła i klawiatury
 screen.blit(gm.GAME_BACKGROUND, (188.5, 20))
-for index, row in enumerate(gm.KEYBOARD_LAYOUT):
-    for letter in row:
-        key = k.Key(letter)
-        key.draw(screen)
-    k.Key.current_letter_pos[0] = 190 + index * k.Key.LETTER_X_SPACING
-    k.Key.current_letter_pos[1] += k.Key.LETTER_Y_SPACING
+k.Key.create_keyboard(screen)
 
 # pętla główna gry
 window_open = True
