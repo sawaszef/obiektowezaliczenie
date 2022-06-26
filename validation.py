@@ -1,6 +1,6 @@
+import random
 import game_module as gm
 import keyboard as k
-import pygame
 
 
 class Validator:
@@ -14,7 +14,7 @@ class Validator:
     def pick_solution(self):
         with open("wordlist.txt", 'r') as file:
             self.words = [word.rstrip("\n") for word in file.readlines()]
-        self.solution = "brown"
+        self.solution = random.choice(self.words)
         self.solution_dict = {letter: self.solution.count(letter) for letter in self.solution}
 
     def check_guess(self, guess, surface):
@@ -47,7 +47,6 @@ class Validator:
                 has_won = True
             else:
                 has_won = False
-
         else:
             in_wordlist = False
             has_won = False

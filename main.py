@@ -20,7 +20,6 @@ pygame.display.set_caption("ŁORDL")
 # Stworzenie słowa odgadywanego i walidatora odpowiedzi
 current_guess = w.Word()
 validator = valid.Validator()
-print(validator.solution)
 
 # wgranie tła i klawiatury
 screen.blit(gm.GAME_BACKGROUND, (188.5, 20))

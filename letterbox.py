@@ -1,5 +1,5 @@
 import game_module as gm
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 
 
 class Letterbox:
